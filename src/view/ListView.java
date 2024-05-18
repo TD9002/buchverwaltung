@@ -38,9 +38,9 @@ public class ListView extends JFrame {
         this.add(jPanel,BorderLayout.NORTH);
 
 
-       tableModel = new DefaultTableModel(new Object[]{"BuchNr.", "Titel", "Autor"}, 0);
+       tableModel = new DefaultTableModel(new Object[]{"BuchNr.", "Titel", "Autor","Status"}, 0);
         for (Buch buch : buchList) {
-            tableModel.addRow(new Object[]{buch.getNr(), buch.getTitel(), buch.getAutor()});
+            tableModel.addRow(new Object[]{buch.getNr(), buch.getTitel(), buch.getAutor(),buch.getStatus()});
         }
 
         table = new JTable(tableModel);
