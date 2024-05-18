@@ -176,6 +176,7 @@ public class MainController {
         mainView.showAutor( b.getAutor().getName() );
         mainView.showTitel( b.getTitel() );
         mainView.showStatus( b.getStatus() );
+        mainView.setStatusComboBox(b.getStatus());
     }
 
 
