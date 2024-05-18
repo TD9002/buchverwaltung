@@ -118,14 +118,25 @@ public class MainController {
 
     public void performLöschen(ActionEvent e) {
         int buchnummer = mainView.getBuchnummer();
-        List<Buch> listeBücher = buchDAO.getAlleBücher();
+        int index = indexAuslesen(buchnummer,buchDAO.getAlleBücher())-1;
 
         //unnötig hier über schleife zu gehen
         for (var book : buchDAO.getAlleBücher()) {
             if (buchnummer == book.getNr()) {
                 if (mainView.confirmDialog("Löschen?")) {
                     buchDAO.deleteBuch(book.getNr());
-                    showBuch(buchDAO.getBuchByNr(listeBücher.get(indexAuslesen(buchnummer, listeBücher) - 1).getNr()));
+                    mainView.showInfoMessage("Buch wurde gelöscht");
+                    if (listView != null) {
+                        listView.updateBuchList(buchDAO.getAlleBücher());
+                    }
+                    if (index < 0){
+                        showBuch(buchDAO.getBuchByNr(buchDAO.getAlleBücher().get(0).getNr()));
+                        listView.setSelection(0);
+                    }
+                    else {
+                        showBuch(buchDAO.getBuchByNr(buchDAO.getAlleBücher().get(index).getNr()));
+                        listView.setSelection(index);
+                    }
 
                 }
             }
@@ -161,9 +172,13 @@ public class MainController {
         if ( ! buchDAO.saveBuch(new Buch(nr, autor, titel, status)) ) {
             mainView.showErrorMessage("Fehler beim Speichern des Buches");
         }
-        else
+        else{
             mainView.showInfoMessage("Buch erfolgreich hinzugefügt");
-    }
+        if (listView != null) {
+            listView.updateBuchList(buchDAO.getAlleBücher());
+
+        }
+    }}
 
     private void clearBuch() {
         mainView.showAutor( "" );

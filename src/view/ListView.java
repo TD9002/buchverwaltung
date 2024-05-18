@@ -17,6 +17,7 @@ public class ListView extends JFrame {
    private JTable table;
    private JTextField suchFeld;
     private TableRowSorter<TableModel> rowSorter;
+    private DefaultTableModel tableModel;
 
     public ListView(List<Buch> buchList) {
         setTitle("Bücher");
@@ -37,7 +38,7 @@ public class ListView extends JFrame {
         this.add(jPanel,BorderLayout.NORTH);
 
 
-        DefaultTableModel tableModel = new DefaultTableModel(new Object[]{"BuchNr.", "Titel", "Autor"}, 0);
+       tableModel = new DefaultTableModel(new Object[]{"BuchNr.", "Titel", "Autor"}, 0);
         for (Buch buch : buchList) {
             tableModel.addRow(new Object[]{buch.getNr(), buch.getTitel(), buch.getAutor()});
         }
@@ -115,5 +116,12 @@ public class ListView extends JFrame {
 
     public  void  setSelection(int i){
         table.setRowSelectionInterval(i,i);
+    }
+    public void updateBuchList(List<Buch> buchList) {
+        this.buchList = buchList;
+        tableModel.setRowCount(0);
+        for (Buch buch : buchList) {
+            tableModel.addRow(new Object[]{buch.getNr(), buch.getTitel(), buch.getAutor()});
+        }
     }
 }
