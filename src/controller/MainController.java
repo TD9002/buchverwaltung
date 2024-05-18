@@ -113,7 +113,6 @@ public class MainController {
             mainView.showErrorMessage("Fehler beim Laden des Buches");
             clearBuch();
         }
-        System.out.println(buchDAO.getAlleBücher());
     }
 
     public void performLöschen(ActionEvent e) {
