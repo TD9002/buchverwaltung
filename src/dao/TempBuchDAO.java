@@ -143,4 +143,12 @@ public class TempBuchDAO implements BuchDAO {
         return false;
     }
 
+    @Override
+    public int indexAuslesen(int nr) {
+        for (int i = 0; i <buchList.size() ; i++) {
+            if (nr == buchList.get(i).getNr())
+                return i;
+        }
+        return -1;
+    }
 }

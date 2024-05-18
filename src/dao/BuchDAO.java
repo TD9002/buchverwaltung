@@ -18,6 +18,7 @@ public interface BuchDAO {
     List<Buch> getAlleBücher();
     boolean saveBuch(Buch buch);
     boolean deleteBuch(int nr);
+    int indexAuslesen(int nr);
 
 
 }

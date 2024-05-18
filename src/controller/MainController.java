@@ -45,7 +45,7 @@ public class MainController {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2 ){
                 int gewähltesBuch = listView.getBuchNr();
-                int index = indexAuslesen(gewähltesBuch,listeBücher);
+                int index = buchDAO.indexAuslesen(gewähltesBuch);
                 showBuch(buchDAO.getBuchByNr(listeBücher.get(index).getNr()));
                     }
                 }
@@ -73,7 +73,7 @@ public class MainController {
 
     private void perfomLinksBlättern(ActionEvent e) {
         List<Buch> listeBücher = buchDAO.getAlleBücher();
-        int indexAngezeigtesBuch = indexAuslesen(mainView.getBuchnummer(),listeBücher);
+        int indexAngezeigtesBuch = buchDAO.indexAuslesen(mainView.getBuchnummer());
         try {
             showBuch(buchDAO.getBuchByNr(listeBücher.get(indexAngezeigtesBuch-1).getNr()));
             mainView.setStatusComboBox(buchDAO.getBuchByNr(listeBücher.get(indexAngezeigtesBuch-1).getNr()).getStatus());
@@ -89,7 +89,8 @@ public class MainController {
     private void perfomRechtsBlättern(ActionEvent e) {
         System.out.println(mainView.getStatusComboBox());
         List<Buch> listeBücher = buchDAO.getAlleBücher();
-        int indexAngezeigtesBuch = indexAuslesen(mainView.getBuchnummer(),listeBücher);
+        int indexAngezeigtesBuch = buchDAO.indexAuslesen(mainView.getBuchnummer());
+
         try {
             showBuch(buchDAO.getBuchByNr(listeBücher.get(indexAngezeigtesBuch+1).getNr()));
             mainView.setStatusComboBox(buchDAO.getBuchByNr(listeBücher.get(indexAngezeigtesBuch+1).getNr()).getStatus());
@@ -117,7 +118,8 @@ public class MainController {
 
     public void performLöschen(ActionEvent e) {
         int buchnummer = mainView.getBuchnummer();
-        int index = indexAuslesen(buchnummer,buchDAO.getAlleBücher())-1;
+        int index = buchDAO.indexAuslesen(mainView.getBuchnummer())-1;
+
 
         //unnötig hier über schleife zu gehen
         for (var book : buchDAO.getAlleBücher()) {
@@ -126,7 +128,7 @@ public class MainController {
                     buchDAO.deleteBuch(book.getNr());
                     mainView.showInfoMessage("Buch wurde gelöscht");
                     if (listView != null) {
-                        listView.updateBuchList(buchDAO.getAlleBücher());
+                        updateListView();
                     }
                     if (index < 0){
                         showBuch(buchDAO.getBuchByNr(buchDAO.getAlleBücher().get(0).getNr()));
@@ -174,7 +176,8 @@ public class MainController {
         else{
             mainView.showInfoMessage("Buch erfolgreich hinzugefügt");
         if (listView != null) {
-            listView.updateBuchList(buchDAO.getAlleBücher());
+            updateListView();
+            listView.setSelection(buchDAO.indexAuslesen(nr));
 
         }
     }}
@@ -192,15 +195,10 @@ public class MainController {
         mainView.showStatus( b.getStatus() );
         mainView.setStatusComboBox(b.getStatus());
     }
-
-
-    private int indexAuslesen(int nr, List<Buch> listeBücher){;
-        for (int i = 0; i <listeBücher.size() ; i++) {
-            if (nr == listeBücher.get(i).getNr())
-              return i;
-        }
-        return -1;
+    public void updateListView(){
+        listView.updateBuchList(buchDAO.getAlleBücher());
     }
+
 
     public static void main(String[] args) {
         new MainController(new BuchViewSwing(prüfungling), new TempBuchDAO());
