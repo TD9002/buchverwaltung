@@ -131,11 +131,15 @@ public class MainController {
                     }
                     if (index < 0){
                         showBuch(buchDAO.getBuchByNr(buchDAO.getAlleBücher().get(0).getNr()));
+                        clearBuch();
+
                         if (listView != null)
                         listView.setSelection(0);
                     }
                     else {
                         showBuch(buchDAO.getBuchByNr(buchDAO.getAlleBücher().get(index).getNr()));
+                        clearBuch();
+
                         if (listView != null)
                         listView.setSelection(index);
                     }
@@ -143,7 +147,6 @@ public class MainController {
                 }
             }
         }
-        clearBuch();
     }
 
     public void performSpeichern(ActionEvent e) {
