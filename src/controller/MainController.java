@@ -87,7 +87,6 @@ public class MainController {
     }
 
     private void perfomRechtsBlättern(ActionEvent e) {
-        System.out.println(mainView.getStatusComboBox());
         List<Buch> listeBücher = buchDAO.getAlleBücher();
         int indexAngezeigtesBuch = buchDAO.indexAuslesen(mainView.getBuchnummer());
 
@@ -132,16 +131,19 @@ public class MainController {
                     }
                     if (index < 0){
                         showBuch(buchDAO.getBuchByNr(buchDAO.getAlleBücher().get(0).getNr()));
+                        if (listView != null)
                         listView.setSelection(0);
                     }
                     else {
                         showBuch(buchDAO.getBuchByNr(buchDAO.getAlleBücher().get(index).getNr()));
+                        if (listView != null)
                         listView.setSelection(index);
                     }
 
                 }
             }
         }
+        clearBuch();
     }
 
     public void performSpeichern(ActionEvent e) {
@@ -186,6 +188,7 @@ public class MainController {
         mainView.showAutor( "" );
         mainView.showTitel( "" );
         mainView.showStatus( BuchStatus.MUST_HAVE );
+        mainView.showNummer(0);
     }
 
     private void showBuch(Buch b) {

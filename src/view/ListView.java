@@ -121,7 +121,7 @@ public class ListView extends JFrame {
         this.buchList = buchList;
         tableModel.setRowCount(0);
         for (Buch buch : buchList) {
-            tableModel.addRow(new Object[]{buch.getNr(), buch.getTitel(), buch.getAutor()});
+            tableModel.addRow(new Object[]{buch.getNr(), buch.getTitel(), buch.getAutor(),buch.getStatus()});
         }
     }
 }

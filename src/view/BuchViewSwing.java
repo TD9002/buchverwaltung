@@ -89,8 +89,13 @@ public class BuchViewSwing extends JFrame implements BuchView {
 
     @Override
     public void showNummer(int nr) {
+        if (nr == 0){
+            buchNrField.setText("");
+        }
+        else {
         buchNrField.setText( String.valueOf(nr) );
-    }
+    }}
+
 
     @Override
     public int getBuchnummer() {
